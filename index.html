@@ -1,41 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Survey</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Interest & Barrier Survey</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="card" id="quizCard">
+    <div class="top-meta">
+      <div id="progressText" class="progress-text">1/75</div>
+      <div id="categoryText" class="category-text">Social Influence</div>
+    </div>
 
-<div class="app">
+    <div class="progress-bar">
+      <div id="progressFill"></div>
+    </div>
 
-  <div id="quizCard" class="card">
-    <h2 id="progressText"></h2>
-    <div class="progress-bar"><div id="progressFill"></div></div>
+    <div id="sectionProgress" class="section-progress"></div>
 
-    <div id="sectionProgress"></div>
-
-    <h3 id="categoryText"></h3>
-    <p id="questionText"></p>
+    <p id="questionText" class="question-text"></p>
 
     <div id="options"></div>
-
-    <div id="timerText"></div>
-    <div class="timer-bar"><div id="timerFill"></div></div>
   </div>
 
-  <div id="resultCard" class="card hidden">
-    <h2>Results</h2>
+  <div class="card result-card" id="resultCard" style="display: none;">
+    <h2>Your Results</h2>
     <div id="resultsContainer"></div>
-    <div id="combinedResult"></div>
-
+    <div id="combinedResult" class="combined-result"></div>
     <button id="downloadBtn">Download PDF</button>
   </div>
 
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="script.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
