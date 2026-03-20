@@ -112,11 +112,8 @@ const sectionProgress = document.getElementById("sectionProgress");
 const combinedResult = document.getElementById("combinedResult");
 
 function renderSectionProgress() {
-  if (!sectionProgress) return;
-
   sectionProgress.innerHTML = "";
-  const questionsPerSection = 15;
-  const currentSection = Math.floor(currentIndex / questionsPerSection);
+  const currentSection = Math.floor(currentIndex / 15);
 
   for (let i = 0; i < 5; i++) {
     const block = document.createElement("div");
@@ -144,7 +141,6 @@ function renderQuestion() {
   progressFill.style.width = `${percent}%`;
 
   renderSectionProgress();
-
   options.innerHTML = "";
 
   const labelsRow = document.createElement("div");
@@ -199,12 +195,12 @@ function calculate() {
     }
   });
 
-  const res = {};
-  categories.forEach((c) => {
-    res[c] = Math.round((sums[c] / 75) * 100);
+  const results = {};
+  categories.forEach((category) => {
+    results[category] = Math.round((sums[category] / 75) * 100);
   });
 
-  return res;
+  return results;
 }
 
 function getLevel(percent) {
@@ -298,42 +294,39 @@ function showResults() {
     resultsContainer.appendChild(div);
   });
 
-  if (combinedResult) {
-    combinedResult.innerHTML = `
-      <strong>Combined Result:</strong><br>
-      ${getCombinedResultText(scores)}
-    `;
-  }
+  combinedResult.innerHTML = `
+    <strong>Combined Result:</strong><br>
+    ${getCombinedResultText(scores)}
+  `;
 }
 
-if (downloadBtn) {
-  downloadBtn.onclick = () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const scores = calculate();
+downloadBtn.onclick = () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const scores = calculate();
 
-    let y = 20;
-    doc.setFontSize(18);
-    doc.text("Survey Results", 20, y);
+  let y = 20;
+  doc.setFontSize(18);
+  doc.text("Survey Results", 20, y);
 
-    y += 12;
-    doc.setFontSize(12);
+  y += 12;
+  doc.setFontSize(12);
 
-    categories.forEach((c) => {
-      doc.text(`${c}: ${scores[c]}%`, 20, y);
-      y += 8;
-      const text = getText(c, scores[c]);
-      const lines = doc.splitTextToSize(text, 170);
-      doc.text(lines, 20, y);
-      y += lines.length * 7 + 4;
-    });
+  categories.forEach((category) => {
+    doc.text(`${category}: ${scores[category]}%`, 20, y);
+    y += 8;
 
-    const combined = getCombinedResultText(scores);
-    const combinedLines = doc.splitTextToSize(`Combined Result: ${combined}`, 170);
-    doc.text(combinedLines, 20, y);
+    const text = getText(category, scores[category]);
+    const lines = doc.splitTextToSize(text, 170);
+    doc.text(lines, 20, y);
+    y += lines.length * 7 + 4;
+  });
 
-    doc.save("survey-results.pdf");
-  };
-}
+  const combined = getCombinedResultText(scores);
+  const combinedLines = doc.splitTextToSize(`Combined Result: ${combined}`, 170);
+  doc.text(combinedLines, 20, y);
+
+  doc.save("survey-results.pdf");
+};
 
 renderQuestion();
