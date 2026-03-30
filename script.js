@@ -389,6 +389,42 @@ function downloadPDF() {
   doc.setFontSize(11);
   doc.setTextColor(78, 59, 68);
   const combinedLines = doc.splitTextToSize(getCombinedResultText(scores), 160);
+  function getSuggestion(scores) {
+  const stem = scores["STEM Interest"];
+  const nonStem = scores["Non-STEM Interest"];
+  const social = scores["Social Influence"];
+  const perfection = scores["Perfectionist Trap"];
+  const cultural = scores["Cultural / Social Barrier"];
+
+  const barrierHigh = social > 60 || perfection > 60 || cultural > 60;
+
+  // 🔹 CASE 1
+  if (stem > 60 && barrierHigh) {
+    return "You seem to have strong interest in STEM, but external pressure or self-doubt may be holding you back. Try exploring STEM through small projects, courses, or mentors who support your growth.";
+  }
+
+  // 🔹 CASE 2
+  if (stem > 60 && !barrierHigh) {
+    return "You have a clear and independent interest in STEM. Consider exploring internships, research opportunities, or advanced courses to grow in this direction.";
+  }
+
+  // 🔹 CASE 3
+  if (nonStem > 60 && stem < 40) {
+    return "Your answers show a strong natural interest in non-STEM fields. You may thrive in areas like communication, arts, or social sciences — explore careers that align with your creativity and expression.";
+  }
+
+  // 🔹 CASE 4
+  if (stem < 40 && barrierHigh) {
+    return "Your current choices may be influenced by pressure or fear rather than true interest. It might help to reflect on what you genuinely enjoy without external expectations.";
+  }
+
+  // 🔹 CASE 5
+  if (stem > 60 && nonStem > 60) {
+    return "You show strong interest in both STEM and non-STEM areas. You may benefit from interdisciplinary fields where both analytical and creative skills are valued.";
+  }
+
+  return "Try exploring different subjects and experiences to better understand what truly interests you and what influences your choices.";
+}
   doc.text(combinedLines, 24, y + 20);
 
   doc.save("my-path-results.pdf");
