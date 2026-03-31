@@ -516,4 +516,28 @@ body {
     width: 42px;
     height: 42px;
   }
+}.combined-box {
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #fff7fb, #fff1f8);
+  border: 1px solid #f2e5eb;
+  box-shadow: 0 8px 22px rgba(236, 72, 153, 0.05);
+  text-align: left;
+}
+
+.combined-box h3 {
+  margin: 0 0 10px;
+  color: #b05a81;
+  font-size: 1.15rem;
+}
+
+.combined-box p {
+  margin: 0 0 18px;
+  color: #4e3b44;
+  line-height: 1.7;
+}
+
+.combined-box p:last-child {
+  margin-bottom: 0;
 }
